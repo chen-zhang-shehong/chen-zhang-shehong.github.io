@@ -1,195 +1,698 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <link rel="stylesheet" type="text/css" href="style.css" />
-    <title>Chen Zhang (张晨)</title>
-    <base href="https://chen-zhang-shehong.github.io">
-    <!-- <base href="./index"> -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Personal homepage" />
+  <title>Chen Zhang (张晨) — Homepage</title>
+
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --panel:#0f1620;
+      --panel2:#0c121b;
+      --text:#e8eef6;
+      --muted:#a9b6c6;
+      --line:#1e2a3a;
+      --accent:#7cc4ff;
+      --accent2:#a78bfa;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --max: 1100px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background: radial-gradient(1200px 700px at 20% -10%, rgba(124,196,255,.15), transparent 55%),
+                  radial-gradient(900px 600px at 110% 10%, rgba(167,139,250,.12), transparent 50%),
+                  var(--bg);
+      line-height:1.55;
+    }
+    a{color:var(--accent); text-decoration:none}
+    a:hover{text-decoration:underline}
+    .wrap{
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+      padding: 18px 0 42px;
+    }
+
+    /* top nav */
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(to bottom, rgba(11,15,20,.88), rgba(11,15,20,.55));
+      border-bottom: 1px solid rgba(30,42,58,.7);
+    }
+    .topbar .wrap{
+      padding: 14px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: 0 0 0 3px rgba(124,196,255,.18);
+    }
+    nav{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    nav a{
+      color: var(--muted);
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid transparent;
+      font-weight:600;
+      font-size: 14px;
+    }
+    nav a:hover{
+      color: var(--text);
+      border-color: rgba(124,196,255,.25);
+      background: rgba(124,196,255,.06);
+      text-decoration:none;
+    }
+    .pill{
+      color: var(--text);
+      border: 1px solid rgba(124,196,255,.28);
+      background: rgba(124,196,255,.08);
+    }
+
+    /* layout */
+    .grid{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: 360px 1fr;
+      gap: 18px;
+      align-items:start;
+    }
+    @media (max-width: 980px){
+      .grid{grid-template-columns: 1fr}
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(15,22,32,.92), rgba(12,18,27,.92));
+      border: 1px solid rgba(30,42,58,.85);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card .in{padding: 16px 16px 18px}
+    .muted{color:var(--muted)}
+    .hr{height:1px; background: rgba(30,42,58,.85); margin: 14px 0}
+
+    /* profile */
+    .avatar{
+      width: 100%;
+      aspect-ratio: 1 / 1.05;
+      object-fit: cover;
+      border-bottom: 1px solid rgba(30,42,58,.85);
+      filter: saturate(1.02) contrast(1.02);
+    }
+    .name{
+      font-size: 22px;
+      font-weight: 800;
+      margin: 8px 0 2px;
+      letter-spacing:.2px;
+    }
+    .role{
+      font-size: 14px;
+      color: var(--muted);
+      margin: 0 0 10px;
+    }
+    .meta{
+      display:grid;
+      gap: 6px;
+      font-size: 14px;
+    }
+    .meta span{color:var(--muted)}
+    .icons{
+      display:flex;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap:wrap;
+    }
+    .iconbtn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(30,42,58,.85);
+      background: rgba(255,255,255,.02);
+      color: var(--text);
+      font-weight: 650;
+      font-size: 13px;
+      text-decoration:none;
+    }
+    .iconbtn:hover{
+      border-color: rgba(124,196,255,.35);
+      background: rgba(124,196,255,.06);
+      text-decoration:none;
+    }
+    .icon{
+      width:16px; height:16px; display:block;
+      fill: currentColor;
+      opacity:.92;
+    }
+
+    /* sections */
+    section{scroll-margin-top: 78px;}
+    .section-title{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 16px 16px 0;
+    }
+    .section-title h2{
+      margin:0;
+      font-size: 18px;
+      letter-spacing:.2px;
+    }
+    .section-title .tag{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .content{padding: 12px 16px 18px}
+    .lead{
+      margin-top:0;
+      color: var(--muted);
+      font-size: 15px;
+    }
+    ul.clean{
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+    ul.clean li{margin: 6px 0}
+    .news li strong{color: var(--text); font-weight: 750}
+
+    /* publication items */
+    .pub-controls{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      margin-top: 6px;
+    }
+    .search{
+      flex: 1 1 260px;
+      position:relative;
+    }
+    input[type="search"]{
+      width:100%;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(30,42,58,.9);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      outline:none;
+    }
+    input[type="search"]::placeholder{color: rgba(169,182,198,.7)}
+    .chips{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .chip{
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(30,42,58,.9);
+      background: rgba(255,255,255,.02);
+      color: var(--muted);
+      font-weight: 650;
+      font-size: 13px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .chip.active{
+      color: var(--text);
+      border-color: rgba(124,196,255,.35);
+      background: rgba(124,196,255,.08);
+    }
+
+    .year{
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(30,42,58,.75);
+    }
+    .year h3{
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing:.6px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .pub{
+      padding: 12px 12px;
+      border: 1px solid rgba(30,42,58,.85);
+      border-radius: 16px;
+      background: rgba(0,0,0,.14);
+      margin: 10px 0;
+    }
+    .pub .title{
+      font-weight: 800;
+      margin: 0 0 6px;
+      color: var(--text);
+    }
+    .pub .authors{
+      margin: 0 0 6px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    .pub .venue{
+      margin: 0 0 10px;
+      color: rgba(169,182,198,.85);
+      font-size: 14px;
+    }
+    .links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .slink{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 7px 9px;
+      border-radius: 12px;
+      border: 1px solid rgba(30,42,58,.85);
+      color: var(--text);
+      background: rgba(255,255,255,.02);
+    }
+    .slink:hover{
+      border-color: rgba(124,196,255,.35);
+      background: rgba(124,196,255,.06);
+      text-decoration:none;
+    }
+
+    footer{
+      margin-top: 18px;
+      color: rgba(169,182,198,.75);
+      font-size: 13px;
+      text-align:center;
+    }
+  </style>
 </head>
 
-<body style="margin:10 ;padding:0">
-    <div id="toptitle">
-        <h1 style="padding-left: 0.5em" lang="zh" >Chen Zhang (张晨) <font size="-0"> (Pronouns: he/him/his)</font></h1>
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <div class="brand"><span class="dot"></span> Chen Zhang</div>
+      <nav>
+        <a href="#home" class="pill">Home</a>
+        <a href="#papers">Papers</a>
+        <a href="#contact">Contact</a>
+      </nav>
     </div>
-<table summary="Table for page layout." id="tlayout" class="center">
-    <tr valign="top">
-<!--     <td id="layout-menu" style="width:10%">
-        <div class="menu-item"><a href="life.html">Life</a></div>
-    </td> -->
+  </div>
 
+  <div class="wrap">
+    <div class="grid">
+      <!-- LEFT: profile -->
+      <aside class="card">
+        <!-- Option A: keep hotlink -->
+        <img class="avatar" src="https://chen-zhang-shehong.github.io/chenzhang.jpg" alt="Chen Zhang portrait" />
 
-    <td id="layout-content" style="width:80%">
-        <!-- <h1 style="margin-top: 0em">Home</h1><br> -->
-        <!-- Image and Profile -->
-        <table class="imgtable">
-            <br>
-            <td><img src="chenzhang.jpg" width = '180', height='240' alt="Chen Zhang" /></td>
-            <td><br></td>
-            <td><br></td>
-            <td><br></td>
-            <td>
-                <p>
-                    Chen Zhang <br>
-                    AI Researcher, 2024 Nov - Present <br>
-                    Singapore Search & Recommendation Team<br>
-                    Huawei Noah's Ark Lab<br>
-                </p>E-mail: chen_zhang@u.nus.edu</p>
+        <!-- Option B: use local image instead (recommended) -->
+        <!-- <img class="avatar" src="assets/chenzhang.jpg" alt="Chen Zhang portrait" /> -->
 
-                <p>
-                    [<a href="https://scholar.google.com/citations?user=XOj25XAAAAAJ&hl=en&authuser=1">Scholar</a>]
-                    &nbsp;
-                    [<a href="https://www.linkedin.com/in/czhang017/" >Linkedin</a>]
-                </p>
-            </td>
-        </table>
+        <div class="in">
+          <div class="name">Chen Zhang (张晨)</div>
+          <div class="role">AI Researcher • Search & Recommendation • Huawei Noah’s Ark Lab (Singapore)</div>
 
-        <!-- Biography -->
-        <div style="margin:30 auto;" >
-            <!-- <hr> -->
-            <h2><a name="biography"></a>About Me</h2>
-            <ul>
-                <p>Currently, I am an AI Researcher at Huawei Noah's Ark Lab, working with <a href='https://stephenliu0423.github.io/'>Dr. Liu Yong</a>. Previously, I was a research fellow affiliated with the ECE department of National University of Singapore, under the supervision of <a href='https://colips.org/~eleliha/' >Prof. Haizhou Li</a> and <a href='https://sites.google.com/site/sitexinchaowang/' >Prof. Xinchao Wang</a> from September 2023 to October 2024. 
-                    I collaborate closely with <a href='https://blogs.upm.es/gthau/luis-fernando-dharo/'>Prof. Luis Fernando D'Haro</a>, <a href='https://www.stern.nyu.edu/faculty/bio/joao-sedoc'>Prof. João Sedoc</a>, and <a href='https://www.cs.cmu.edu/~air/'>Prof. Alexander I. Rudnicky</a>. I was also an NUS-Robert Bosch (SEA) IPP student (2019 - 2022) and <a href='https://www.linkedin.com/in/thomas-friedrichs-19b36a8a/?originalSubdomain=sg' >Dr. Thomas Friedrichs</a> was my supervisor in Robert Bosch (SEA).  
-                    My research interests include LLM Alignment, LLM Evaluation, and Dialogue Systems.</p><br>
-            <!-- <h3><a name="research"></a>Research</h3> -->
-            </ul>
+          <div class="meta">
+            <div><span>Email:</span> <a href="mailto:chen_zhang@u.nus.edu">chen_zhang@u.nus.edu</a></div>
+            <div><span>Pronouns:</span> he/him/his</div>
+            <div><span>Focus:</span>Agentic RAG •  LLM Alignment • LLM Evaluation • Dialogue Systems</div>
+          </div>
+
+          <div class="icons">
+            <!-- Scholar link might 403 to fetch here, but it works for users in browser -->
+            <a class="iconbtn" href="https://scholar.google.com/citations?hl=en&user=XOj25XAAAAAJ" target="_blank" rel="noreferrer">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zm0 14L4.6 12.9 12 17l7.4-4.1L12 17zm0-2.2 7-3.9V9.4l-7 3.8-7-3.8v1.5l7 3.9z"/></svg>
+              Scholar
+            </a>
+
+            <a class="iconbtn" href="https://www.linkedin.com/in/czhang017/" target="_blank" rel="noreferrer">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 23.5h4V7.98h-4V23.5zM8 7.98h3.83v2.12h.05c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1v9.36h-4v-8.3c0-1.98-.04-4.52-2.76-4.52-2.76 0-3.18 2.15-3.18 4.38v8.44H8V7.98z"/></svg>
+              LinkedIn
+            </a>
+
+            <a class="iconbtn" href="#contact">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              Contact
+            </a>
+          </div>
         </div>
-<hr>
-        <!-- News -->
-         <div style="margin:30 auto;" >
-                <h2><a name="news"></a>News</h2>
-                <ul>
-                   <li><p>November 2024: I will join the Search & Recommendation Team in Huawei Noah's Ark Lab, Singapore </p></li>
-                   <li><p>December 2023: I will serve as an Area Chair of ACL ARR </p></li>
-                   <li><p>September 2023: I will join ECE, National University of Singapore as a research fellow. </p></li>
-                   <li><p>June 2023: I have received my Ph.D. from National University of Singapore. </p></li>
-                   <li><p>March 2023: I will be part of the organizing committee of <a href="https://2023.emnlp.org/">EMNLP-2023</a>. </p></li>
-                   <li><p>March 2023: I have submitted my thesis titled "Self-Supervised Modeling for Open-Domain Dialogue Evaluation". </p></li>
-                   <li><p>April 2022: I will serve as the workshop chair for <a href="https://dstc11.dstc.community/organizing-committees">DSTC11</a>. </p></li>
-                   <li><p>April 2021: I will be the main organizer of DSTC10 Track 5, <a href="https://chateval.org/dstc10">"Automtic Evaluation and Moderation of Open-Domain Dialogue Systems"</a>. </p></li>
-                </ul>
-         </div>
-    <hr>
-        <!-- Education -->
-         <div style="margin:30 auto;" >
-                <h2><a name="Education"></a>Education</h2>
-                <ul>
-                   <li><p>Doctor of Philosophy (PhD) from National University of Singapore, Singapore (Jan 2019 to Jun 2023) (EDB NUS-Bosch IPP Scholarship)</p></li>
-                   <li><p>Double Degree in Business & Computer Engineering from Nanyang Technological University, Singapore (Aug 2012 - Jun 2016) (Science & Technology Undergraduate Scholarship) </p></li>
-                   <li><p>GCE A Level, Victoria Junior College, Singapore (Jan 2010 - Dec 2011) (Singapore MOE SM1 Scholarship)</p></li>
-                   <li><p>GCE O Level, Victoria School, Singapore (Jan 2008 - Dec 2009) (Singapore MOE SM1 Scholarship)</p></li>
-                </ul>
-         </div>
-<hr>
+      </aside>
 
-        <!-- Selected Publications -->
-        <div style="margin:30 auto;" >
-            <h2><a name="Publications"></a>Selected Papers</h2> 
-            <!-- (* indicates equal contributions; # indicates corresponding author) -->
-            <ul>
-            <h3> Year-2025 </h3>
-                    <li>
-                    <a href="https://arxiv.org/abs/2409.13948">Aligning Language Models Using Follow-up Likelihood as Reward Signal</a><br>
-                    <u>Chen Zhang</u>, Dading Chong, Feng Jiang, Chengguang Tang, Anningzhe Gao, Guohua Tang, Haizhou Li. <i>AAAI 2025</i>
-                </li><br>
-            <h3> Year-2024 </h3>
-            <hr>
-                <li>
-                    <a href="https://arxiv.org/abs/2405.20215">TS-Align: A Teacher-Student Collaborative Framework for Scalable Iterative Finetuning of Large Language Models</a><br>
-                    <u>Chen Zhang</u>, Chengguang Tang, Dading Chong, Ke Shi, Guohua Tang, Feng Jiang, Haizhou Li. <i>Findings of EMNLP 2024</i>
-                </li><br>
-                <li>
-                    <a href="https://aclanthology.org/2024.lrec-main.373.pdf">CrossTune: Black-Box Few-Shot Classification with Label Enhancement</a><br>
-                    Danqing Luo, <u>Chen Zhang</u>, Yan Zhang, Haizhou Li. <i>LREC-COLING 2024</i> 
-                </li><br>
-                <li>
-                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/29923">A Comprehensive Analysis of the Effectiveness of Large Language Models as Automatic Dialogue Evaluators</a><br>
-                    <u>Chen Zhang</u>, Luis Fernando D'Haro, Yiming Chen, Malu Zhang, Haizhou Li. <i>AAAI 2024</i> 
-                    &nbsp;[<a href="https://github.com/e0397123/comp-analysis">Code</a>]
-                </li><br>
-            <h3> Year-2023 </h3>
-            <hr>
-                 <li>
-                    <a href="https://arxiv.org/pdf/2310.08958.pdf">xDial-Eval: A Multilingual Open-Domain Dialogue Evaluation Benchmark</a><br>
-                    <u>Chen Zhang</u>, Luis Fernando D'Haro, Chengguang Tang, Ke Shi, Guohua Tang, Haizhou Li. <i>Findings of EMNLP 2023</i> 
-                    &nbsp;[<a href="https://github.com/e0397123/xDial-Eval">Code</a>]
-                </li><br>
-                <li>
-                    <a href="https://scholarbank.nus.edu.sg/handle/10635/242654">Self-Supervised Modeling for Open-Domain Dialogue Evaluation</a><br>
-                    Chen Zhang. <i>Ph.D. Thesis</i>
-                </li><br>
-                 <li>
-                    <a href="https://ieeexplore.ieee.org/document/10056996/">PoE: A Panel of Experts for Generalized Automatic Dialogue Assessment</a><br>
-                    <u>Chen Zhang</u>,  Luis Fernando D'Haro, Qiquan Zhang, Thomas Friedrichs, Haizhou Li. <i>IEEE/ACM Transactions on Audio, Speech, and Language Processing</i>
-                </li><br>
-            <h3> Year-2022 </h3>
-            <hr>
-                <li>
-                    <a href="https://aclanthology.org/2022.emnlp-main.220.pdf">FineD-Eval: Fine-grained Automatic Dialogue-Level Evaluation</a><br>
-                    <u>Chen Zhang</u>,  Luis Fernando D'Haro, Qiquan Zhang, Thomas Friedrichs, Haizhou Li. <i>EMNLP 2022</i> 
-                    &nbsp;[<a href="https://github.com/e0397123/FineD-Eval">Code</a>]
-                </li><br>
-                <li>
-                    <a href="https://ojs.aaai.org/index.php/AAAI/article/view/21420/">MDD-Eval: Self-Training on Augmented Data for Multi-Domain Dialogue Evaluation</a><br>
-                    <u>Chen Zhang</u>,  Luis Fernando D'Haro, Thomas Friedrichs, Haizhou Li. <i>AAAI 2022</i> 
-                    &nbsp;[<a href="https://github.com/e0397123/MDD-Eval">Code</a>]
-                </li><br>
-<!--                  <li>
-                    <a href="https://arxiv.org/abs/2203.10012/">Report from the NSF Future Directions Workshop on Automatic Evaluation of Dialog: Research Directions and Challenges</a><br>
-                    Shikib Mehri, Jinho Choi, Luis Fernando D'Haro, Jan Deriu, Maxine Eskenazi, Milica Gasic, Kallirroi Georgila, Dilek Hakkani-Tur, Zekang Li, Verena Rieser, Samira Shaikh, David Traum, Yi-Ting Yeh, Zhou Yu, Yizhe Zhang, <u>Chen Zhang</u>. <i>NSF Future Directions Workshop on Automatic Evaluation of Dialog, 2022</i>
-                </li><br> -->
-            <h3> Year-2021 </h3>
-            <hr>
-                <li>
-                    <a href="https://arxiv.org/abs/2111.02110">Automatic Evaluation and Moderation of Open-domain Dialogue Systems</a><br>
-                    <u>Chen Zhang</u>,  João Sadoc, Luis Fernando D'Haro, Rafael Banchs, Alexander Rudnicky. <i><a href='https://dstc10.dstc.community/tracks'>DSTC10 Track 5</a></i>
-                    &nbsp;[<a href="https://github.com/e0397123/dstc10_metric_track">Code</a>]
-                </li><br>
-                <li>
-                    <a href="https://arxiv.org/abs/2110.01895">Investigating the Impact of Pre-trained Language Models on Dialog Evaluation</a><br>
-                    <u>Chen Zhang</u>,  Luis Fernando D'Haro, Yiming Chen, Thomas Friedrichs, Haizhou Li. <i>IWSDS 2021 Best Paper</i> 
-                </li><br>
+      <!-- RIGHT: main -->
+      <main>
+        <!-- HOME -->
+        <section id="home" class="card">
+          <div class="section-title">
+            <h2>About</h2>
+            <div class="tag">#home</div>
+          </div>
+          <div class="content">
+            <p class="lead">
+              Currently, I am an AI Researcher at Huawei Singapore Search & Recommendation Lab.
+              Previously, I was a research fellow at ECE, National University of Singapore (Sep 2023 – Oct 2024),
+              My research interests include LLM Alignment, LLM Evaluation, and Dialogue Systems.
+            </p>
 
-<!--                 <li>
-                    <a href="https://aclanthology.org/2021.emnlp-main.718/">Revisiting Self-Training for Few-Shot Learning of Language Model</a><br>
-                    Yiming Chen, Yan Zhang, <u>Chen Zhang</u>, Grandee Lee, Ran Cheng, Haizhou Li. <i>EMNLP 2021</i> 
-                    &nbsp;[<a href="https://github.com/MatthewCYM/SFLM">Code</a>]
-                </li><br> -->
+            <div class="hr"></div>
 
-                <li>
-                    <a href="https://aclanthology.org/2021.acl-long.441/">DynaEval: Unifying Turn and Dialogue Level Evaluation</a><br>
-                    <u>Chen Zhang</u>, Yiming Chen, Luis Fernando D’Haro, Yan Zhang, Thomas Friedrichs, Grandee Lee, Haizhou Li. <i>ACL 2021</i>
-                    &nbsp;[<a href="https://github.com/e0397123/DynaEval">Code</a>] 
-                    <!-- [<a href="">Code</a>] -->
-                </li><br>
-            <h3> Year-2020 </h3>
-                <hr>
-                <li>
-                    <a href="https://ieeexplore-ieee-org.libproxy1.nus.edu.sg/abstract/document/9409633">D-score: Holistic Dialogue Evaluation without Reference </a><br>
-                    <u>Chen Zhang</u>, Grandee Lee, Luis Fernando D’Haro, Haizhou Li. <i>IEEE/ACM Transactions on Audio, Speech, and Language Processing</i>
-                    &nbsp;[<a href="https://github.com/e0397123/D-score">Code</a>]
-                </li><br>
-
-<!--                 <li>
-                    <a href="https://www.worldscientific.com/doi/abs/10.1142/S0218001421530037">Joint Pre-Trained Chinese Named Entity Recognition Based on Bi-Directional Language Model</a><br>
-                    Changxia Ma, <u>Chen Zhang</u>. <i>International Journal of Pattern Recognition and Artificial Intelligence</i> 
-                    
-                </li><br> -->
-
-                <li>
-                    <a href="https://link-springer-com.libproxy1.nus.edu.sg/chapter/10.1007/978-981-15-8395-7_5">Deep AM-FM: Toolkit for automatic dialogue evaluation</a><br></a>
-                    <u>Chen Zhang</u>, Luis Fernando D’Haro, Rafael E. Banchs, Thomas Friedrichs, Haizhou Li. <i>Conversational Dialogue Systems for the Next Decade</i> 
-                    &nbsp;[<a href="https://github.com/e0397123/AM-FM">Code</a>]
-                </li><br>                
+            <h3 style="margin:0 0 6px;">News</h3>
+            <ul class="clean news" id="news">
+              <li><strong>Mar 2025:</strong> Working on DeepDiver, Pangu-Native DeepResearch Agent.</li>
+              <li><strong>Nov 2024:</strong> Joined Search & Recommendation Team, Huawei Noah’s Ark Lab (Singapore).</li>
+              <li><strong>Dec 2023:</strong> Area Chair of ACL ARR.</li>
+              <li><strong>Sep 2023:</strong> Research Fellow at ECE, NUS.</li>
+              <li><strong>Jun 2023:</strong> Ph.D. received from National University of Singapore.</li>
+              <li><strong>Mar 2023:</strong> Organizing committee of EMNLP 2023.</li>
+              <li><strong>Apr 2022:</strong> Workshop chair for DSTC11.</li>
+              <li><strong>Apr 2021:</strong> Main organizer of DSTC10 Track 5.</li>
             </ul>
-        </div>        
 
-    </td>
+            <div class="hr"></div>
 
+            <h3 style="margin:0 0 6px;">Education</h3>
+            <ul class="clean">
+              <li>PhD, National University of Singapore (Jan 2019 – Jun 2023) — EDB NUS-Bosch IPP Scholarship</li>
+              <li>Double Degree, Business & Computer Engineering, Nanyang Technological University (Aug 2012 – Jun 2016)</li>
+              <li>GCE A Level, Victoria Junior College (2010 – 2011)</li>
+              <li>GCE O Level, Victoria School (2008 – 2009)</li>
+            </ul>
+          </div>
+        </section>
 
-</tr>
-</table>
+        <!-- PAPERS -->
+        <section id="papers" class="card" style="margin-top:18px;">
+          <div class="section-title">
+            <h2>Selected Papers</h2>
+            <div class="tag">#papers</div>
+          </div>
+
+          <div class="content">
+            <div class="pub-controls">
+              <div class="search">
+                <input id="q" type="search" placeholder="Search papers (title / venue / year)..." />
+              </div>
+              <div class="chips" aria-label="year filter">
+                <div class="chip active" data-year="all">All</div>
+                <div class="chip" data-year="2026">2026</div>
+                <div class="chip" data-year="2025">2025</div>
+                <div class="chip" data-year="2024">2024</div>
+                <div class="chip" data-year="2023">2023</div>
+                <div class="chip" data-year="2022">2022</div>
+                <div class="chip" data-year="2021">2021</div>
+                <div class="chip" data-year="2020">2020</div>
+              </div>
+            </div>
+
+            <div class="year" data-year-block="2026">
+              <h3>2026</h3>
+              <div class="pub" data-year="2026">
+                <div class="title">SRR-Judge: Step-Level Rating and Refinement for Enhancing Search-Integrated Reasoning in Search Agents</div>
+                <div class="authors">Chen Zhang, Kuicai Dong, Dexun Li, Wenjun Li, Qu Yang, Wei Han, Yong Liu</div>
+                <div class="venue">arXiv</div>
+                <div class="links">
+                  <a class="slink" href="https://arxiv.org/abs/2602.07773" target="_blank" rel="noreferrer">paper</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="year" data-year-block="2025">
+              <h3>2025</h3>
+
+              <div class="pub" data-year="2025">
+
+                <div class="title">RAGCap-Bench: Benchmarking Capabilities of LLMs in Agentic Retrieval Augmented Generation Systems</div>
+                <div class="authors">Jingru Lin*, Chen Zhang*, Stephen Y. Liu, Haizhou Li</div>
+                <div class="venue">arXiv</div>
+                <div class="links">
+                  <a class="slink" href="https://arxiv.org/abs/2510.13910" target="_blank" rel="noreferrer">paper</a>
+                  <a class="slink" href="https://github.com/jingru-lin/RAGCap-Bench" target="_blank" rel="noreferrer">code</a>
+                </div>
+
+                <div class="title">DeepDiver: Adaptive Search Intensity Scaling via Open-Web Reinforcement Learning</div>
+                <div class="authors">Wenxuan Shi, Haochen Tan, Chuqiao Kuang, Xiaoguang Li, Xiaozhe Ren, Chen Zhang, Hanting Chen, Yasheng Wang, Lu Hou, Lifeng Shang</div>
+                <div class="venue">NeurIPS 2026</div>
+                <div class="links">
+                  <a class="slink" href="hhttps://arxiv.org/abs/2505.24332" target="_blank" rel="noreferrer">paper</a>
+                </div>
+                <div class="title">A Survey on Multi-Turn Interaction Capabilities of Large Language Models</div>
+                <div class="authors">Chen Zhang, Xinyi Dai, Yaxiong Wu, Qu Yang, Yasheng Wang, Ruiming Tang, Yong Liu</div>
+                <div class="venue">arXiv</div>
+                <div class="links">
+                  <a class="slink" href="https://arxiv.org/abs/2501.09959" target="_blank" rel="noreferrer">paper</a>
+                </div>
+
+                <div class="title">Aligning Language Models Using Follow-up Likelihood as Reward Signal</div>
+                <div class="authors">Chen Zhang, Dading Chong, Feng Jiang, Chengguang Tang, Anningzhe Gao, Guohua Tang, Haizhou Li</div>
+                <div class="venue">AAAI 2025</div>
+                <div class="links">
+                  <a class="slink" href="https://ojs.aaai.org/index.php/AAAI/article/view/34776" target="_blank" rel="noreferrer">paper</a>
+                  <a class="slink" href="https://github.com/e0397123/FLR" target="_blank" rel="noreferrer">code</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="year" data-year-block="2024">
+              <h3>2024</h3>
+
+              <div class="pub" data-year="2024">
+                <div class="title">TS-Align: A Teacher-Student Collaborative Framework for Scalable Iterative Finetuning of Large Language Models</div>
+                <div class="authors">Chen Zhang, Chengguang Tang, Dading Chong, Ke Shi, Guohua Tang, Feng Jiang, Haizhou Li</div>
+                <div class="venue">Findings of EMNLP 2024</div>
+                <div class="links">
+                  <a class="slink" href="https://aclanthology.org/2024.findings-emnlp.521/" target="_blank" rel="noreferrer">paper</a>
+                </div>
+              </div>
+
+              <div class="pub" data-year="2024">
+                <div class="title">CrossTune: Black-Box Few-Shot Classification with Label Enhancement</div>
+                <div class="authors">Danqing Luo*, Chen Zhang*, Yan Zhang, Haizhou Li</div>
+                <div class="venue">LREC-COLING 2024</div>
+                <div class="links">
+                  <a class="slink" href="https://aclanthology.org/2024.lrec-main.373.pdf" target="_blank" rel="noreferrer">pdf</a>
+                </div>
+              </div>
+
+              <div class="pub" data-year="2024">
+                <div class="title">A Comprehensive Analysis of the Effectiveness of Large Language Models as Automatic Dialogue Evaluators</div>
+                <div class="authors">Chen Zhang, Luis Fernando D'Haro, Yiming Chen, Malu Zhang, Haizhou Li</div>
+                <div class="venue">AAAI 2024</div>
+                <div class="links">
+                  <a class="slink" href="https://ojs.aaai.org/index.php/AAAI/article/view/29923" target="_blank" rel="noreferrer">paper</a>
+                  <a class="slink" href="https://github.com/e0397123/comp-analysis" target="_blank" rel="noreferrer">code</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="year" data-year-block="2023">
+              <h3>2023</h3>
+
+              <div class="pub" data-year="2023">
+                <div class="title">xDial-Eval: A Multilingual Open-Domain Dialogue Evaluation Benchmark</div>
+                <div class="authors">Chen Zhang, Luis Fernando D'Haro, Chengguang Tang, Ke Shi, Guohua Tang, Haizhou Li</div>
+                <div class="venue">Findings of EMNLP 2023</div>
+                <div class="links">
+                  <a class="slink" href="https://aclanthology.org/2023.findings-emnlp.371" target="_blank" rel="noreferrer">paper</a>
+                  <a class="slink" href="https://github.com/e0397123/xDial-Eval" target="_blank" rel="noreferrer">code</a>
+                </div>
+              </div>
+
+              <div class="pub" data-year="2023">
+                <div class="title">Self-Supervised Modeling for Open-Domain Dialogue Evaluation</div>
+                <div class="authors">Chen Zhang</div>
+                <div class="venue">Ph.D. Thesis</div>
+                <div class="links">
+                  <a class="slink" href="https://www.proquest.com/openview/b675cdf1aabc0bd19c603f5659691368" target="_blank" rel="noreferrer">paper</a>
+                </div>
+              </div>
+
+              <div class="pub" data-year="2023">
+                <div class="title">PoE: a Panel of Experts for Generalized Automatic Dialogue Assessment</div>
+                <div class="authors">Chen Zhang, Luis Fernando D'Haro, Qiquan Zhang, Thomas Friedrichs, Haizhou Li</div>
+                <div class="venue">IEEE/ACM TASLP</div>
+                <div class="links">
+                  <a class="slink" href="https://ieeexplore.ieee.org/document/10056996" target="_blank" rel="noreferrer">paper</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="year" data-year-block="2022">
+              <h3>2022</h3>
+
+              <div class="pub" data-year="2022">
+                <div class="title">FineD-Eval: Fine-grained Automatic Dialogue-Level Evaluation</div>
+                <div class="authors">Chen Zhang, Luis Fernando D'Haro, Qiquan Zhang, Thomas Friedrichs, Haizhou Li</div>
+                <div class="venue">EMNLP 2022</div>
+                <div class="links">
+                  <a class="slink" href="https://aclanthology.org/2022.emnlp-main.220.pdf" target="_blank" rel="noreferrer">paper</a>
+                  <a class="slink" href="https://github.com/e0397123/FineD-Eval" target="_blank" rel="noreferrer">code</a>
+                </div>
+              </div>
+
+              <div class="pub" data-year="2022">
+                <div class="title">MDD-Eval: Self-Training on Augmented Data for Multi-Domain Dialogue Evaluation</div>
+                <div class="authors">Chen Zhang, Luis Fernando D'Haro, Thomas Friedrichs, Haizhou Li</div>
+                <div class="venue">AAAI 2022</div>
+                <div class="links">
+                  <a class="slink" href="https://ojs.aaai.org/index.php/AAAI/article/view/21420" target="_blank" rel="noreferrer">paper</a>
+                  <a class="slink" href="https://github.com/e0397123/MDD-Eval" target="_blank" rel="noreferrer">code</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="year" data-year-block="2021">
+              <h3>2021</h3>
+
+              <div class="pub" data-year="2021">
+                <div class="title">Automatic Evaluation and Moderation of Open-domain Dialogue Systems</div>
+                <div class="authors">Chen Zhang, João Sedoc, Luis Fernando D'Haro, Rafael Banchs, Alexander Rudnicky</div>
+                <div class="venue">DSTC10 Track 5</div>
+                <div class="links">
+                  <a class="slink" href="https://arxiv.org/abs/2111.02110" target="_blank" rel="noreferrer">paper</a>
+                  <a class="slink" href="https://github.com/e0397123/dstc10_metric_track" target="_blank" rel="noreferrer">code</a>
+                </div>
+              </div>
+
+              <div class="pub" data-year="2021">
+                <div class="title">Investigating the Impact of Pre-trained Language Models on Dialog Evaluation</div>
+                <div class="authors">Chen Zhang, Luis Fernando D'Haro, Yiming Chen, Thomas Friedrichs, Haizhou Li</div>
+                <div class="venue">IWSDS 2021 (Best Paper)</div>
+                <div class="links">
+                  <a class="slink" href="https://link.springer.com/chapter/10.1007/978-981-19-5538-9_21" target="_blank" rel="noreferrer">paper</a>
+                </div>
+              </div>
+
+              <div class="pub" data-year="2021">
+                <div class="title">DynaEval: Unifying Turn and Dialogue Level Evaluation</div>
+                <div class="authors">Chen Zhang, Yiming Chen, Luis Fernando D’Haro, Yan Zhang, Thomas Friedrichs, Grandee Lee, Haizhou Li</div>
+                <div class="venue">ACL 2021</div>
+                <div class="links">
+                  <a class="slink" href="https://aclanthology.org/2021.acl-long.441/" target="_blank" rel="noreferrer">paper</a>
+                  <a class="slink" href="https://github.com/e0397123/DynaEval" target="_blank" rel="noreferrer">code</a>
+                </div>
+              </div>
+            </div>
+
+            <div class="year" data-year-block="2020">
+              <h3>2020</h3>
+
+              <div class="pub" data-year="2020">
+                <div class="title">D-score: Holistic Dialogue Evaluation without Reference</div>
+                <div class="authors">Chen Zhang, Grandee Lee, Luis Fernando D’Haro, Haizhou Li</div>
+                <div class="venue">IEEE/ACM TASLP</div>
+                <div class="links">
+                  <a class="slink" href="https://ieeexplore.ieee.org/document/9409633" target="_blank" rel="noreferrer">paper</a>
+                  <a class="slink" href="https://github.com/e0397123/D-score" target="_blank" rel="noreferrer">code</a>
+                </div>
+              </div>
+
+              <div class="pub" data-year="2020">
+                <div class="title">Deep AM-FM: Toolkit for automatic dialogue evaluation</div>
+                <div class="authors">Chen Zhang, Luis Fernando D’Haro, Rafael E. Banchs, Thomas Friedrichs, Haizhou Li</div>
+                <div class="venue">Conversational Dialogue Systems for the Next Decade</div>
+                <div class="links">
+                  <a class="slink" href="https://link.springer.com/chapter/10.1007/978-981-15-8395-7_5" target="_blank" rel="noreferrer">paper</a>
+                  <a class="slink" href="https://github.com/e0397123/deep-amfm" target="_blank" rel="noreferrer">code</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="card" style="margin-top:18px;">
+          <div class="section-title">
+            <h2>Contact</h2>
+            <div class="tag">#contact</div>
+          </div>
+          <div class="content">
+            <p class="lead" style="margin-bottom:10px;">
+              Best way to reach me is email:
+              <a href="mailto:chen_zhang@u.nus.edu">chen_zhang@u.nus.edu</a>
+            </p>
+            <div class="links">
+              <a class="slink" href="mailto:chen_zhang@u.nus.edu">email</a>
+              <a class="slink" href="https://scholar.google.com/citations?hl=en&user=XOj25XAAAAAJ" target="_blank" rel="noreferrer">google scholar</a>
+              <a class="slink" href="https://www.linkedin.com/in/czhang017/" target="_blank" rel="noreferrer">linkedin</a>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // simple paper search + year filter
+    const q = document.getElementById('q');
+    const chips = [...document.querySelectorAll('.chip')];
+    const pubs = [...document.querySelectorAll('.pub')];
+    const yearBlocks = [...document.querySelectorAll('[data-year-block]')];
+
+    let activeYear = 'all';
+
+    function applyFilters(){
+      const term = (q.value || '').trim().toLowerCase();
+
+      // show/hide pubs
+      pubs.forEach(p => {
+        const y = p.getAttribute('data-year');
+        const text = p.innerText.toLowerCase();
+        const yearOk = (activeYear === 'all') || (y === activeYear);
+        const termOk = !term || text.includes(term);
+        p.style.display = (yearOk && termOk) ? '' : 'none';
+      });
+
+      // hide empty year blocks
+      yearBlocks.forEach(block => {
+        const y = block.getAttribute('data-year-block');
+        const anyVisible = [...block.querySelectorAll('.pub')]
+          .some(p => p.style.display !== 'none');
+        block.style.display = anyVisible ? '' : 'none';
+      });
+    }
+
+    q.addEventListener('input', applyFilters);
+
+    chips.forEach(c => {
+      c.addEventListener('click', () => {
+        chips.forEach(x => x.classList.remove('active'));
+        c.classList.add('active');
+        activeYear = c.getAttribute('data-year');
+        applyFilters();
+      });
+    });
+
+    applyFilters();
+  </script>
 </body>
-
 </html>
